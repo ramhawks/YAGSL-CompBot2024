@@ -31,6 +31,10 @@ import frc.robot.subsystems.lightingSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
  * little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls).
@@ -60,15 +64,15 @@ public class RobotContainer
 
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
         () -> MathUtil.applyDeadband(
-                  flightStick.getRawAxis(1) * 
+                  -flightStick.getRawAxis(1) * 
                   mapDouble(flightStick.getRawAxis(3), 1, -1, .5, 1), 
                   OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(
-                  flightStick.getRawAxis(0) * 
+                  -flightStick.getRawAxis(0) * 
                   mapDouble(flightStick.getRawAxis(3), 1, -1, .5, 1), 
                   OperatorConstants.LEFT_X_DEADBAND),
         () -> MathUtil.applyDeadband(
-                  flightStick.getRawAxis(2) * 
+                  -flightStick.getRawAxis(2) * 
                   mapDouble(flightStick.getRawAxis(3), 1, -1, .5, 1), 
                   OperatorConstants.ROTATE_DEADBAND));
 
@@ -170,7 +174,13 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("New Auto");
+    //return drivebase.getAutonomousCommand("SimplePath");
+    //PathPlannerPath path = PathPlannerPath.fromPathFile("SimplePath");
+
+    // Create a path following command using AutoBuilder. This will also trigger event markers.
+    //return AutoBuilder.followPath(path);
+    return new PathPlannerAuto("SimpleAuto");
+
   }
 
   public void setDriveMode()
