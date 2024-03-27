@@ -324,8 +324,8 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    SmartDashboard.putNumber("X Pos", swerveDrive.getPose().getX());
-    SmartDashboard.putNumber("Y Pos", swerveDrive.getPose().getY());
+    //SmartDashboard.putNumber("X Pos", swerveDrive.getPose().getX());
+    //SmartDashboard.putNumber("Y Pos", swerveDrive.getPose().getY());
   }
 
   @Override

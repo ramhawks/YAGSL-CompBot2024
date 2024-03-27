@@ -11,6 +11,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -54,6 +58,8 @@ public class RobotContainer
   //final CommandXboxController driverXbox = new CommandXboxController(0);
   final Joystick flightStick = new Joystick(0);
 
+  private final SendableChooser<Command> autoChooser;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -77,6 +83,19 @@ public class RobotContainer
                   OperatorConstants.ROTATE_DEADBAND));
 
     drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+
+    // Build an auto chooser. This will use Commands.none() as the default option.
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    // Another option that allows you to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+    ShuffleboardTab tab = Shuffleboard.getTab("Data Tab");
+    Shuffleboard.selectTab("Data Tab");
+    //Shuffleboard.getTab("Data Tab").add("Homed", feeder.isHomed());
+
+    //Shuffleboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     /* 
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
@@ -179,8 +198,8 @@ public class RobotContainer
 
     // Create a path following command using AutoBuilder. This will also trigger event markers.
     //return AutoBuilder.followPath(path);
-    return new PathPlannerAuto("SimpleAuto");
-
+    //return new PathPlannerAuto("SimpleAuto");
+    return autoChooser.getSelected();
   }
 
   public void setDriveMode()
