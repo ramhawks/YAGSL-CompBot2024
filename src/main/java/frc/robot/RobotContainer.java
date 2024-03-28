@@ -34,8 +34,10 @@ import frc.robot.subsystems.feederSubsystem;
 import frc.robot.subsystems.lightingSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+import java.lang.reflect.Field;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
@@ -84,6 +86,12 @@ public class RobotContainer
 
     drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
+
+    //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
+    NamedCommands.registerCommand("ShootPos", new ShootPositionCommand(feeder));
+    NamedCommands.registerCommand("Shoot", new ShootSpeakerCommand(feeder, lights));
+    NamedCommands.registerCommand("StopMotors", new StopIntakeCommand(feeder, lights));
+
     // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -92,10 +100,11 @@ public class RobotContainer
 
     ShuffleboardTab tab = Shuffleboard.getTab("Data Tab");
     Shuffleboard.selectTab("Data Tab");
+    Shuffleboard.getTab("Data Tab").add(autoChooser);
+    //Shuffleboard.getTab("Date Tabe").add("Field", Field);
     //Shuffleboard.getTab("Data Tab").add("Homed", feeder.isHomed());
-
     //Shuffleboard.putData("Auto Chooser", autoChooser);
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    //SmartDashboard.putData("Auto Chooser", autoChooser);
 
     /* 
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
