@@ -41,7 +41,7 @@ public class feederSubsystem extends SubsystemBase {
   //private double proxDistance;
 
   private boolean isHomed = false;
-
+  
 
   /** Creates a new feederSubsystem. */
   public feederSubsystem() {
@@ -115,6 +115,7 @@ public class feederSubsystem extends SubsystemBase {
     //SmartDashboard.putBoolean("stop but2", RobotContainer.flightStick.getRawButton(11));
     SmartDashboard.putBoolean("Homed", isHomed);
     //Shuffleboard.getTab("Data Tab").("Homed", isHomed);
+
 
     //if(!intakeSwitch.get()) stopMotors();
   }

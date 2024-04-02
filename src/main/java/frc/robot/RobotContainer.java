@@ -88,9 +88,9 @@ public class RobotContainer
 
 
     //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-    NamedCommands.registerCommand("ShootPos", new ShootPositionCommand(feeder));
-    NamedCommands.registerCommand("Shoot", new ShootSpeakerCommand(feeder, lights));
-    NamedCommands.registerCommand("StopMotors", new StopIntakeCommand(feeder, lights));
+    NamedCommands.registerCommand("ShootPos", new ShootPositionCommand(feeder).withTimeout(1));
+    NamedCommands.registerCommand("Shoot", new ShootSpeakerCommand(feeder, lights).withTimeout(1));
+    NamedCommands.registerCommand("StopMotors", new StopIntakeCommand(feeder, lights).withTimeout(1));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -98,13 +98,13 @@ public class RobotContainer
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-    ShuffleboardTab tab = Shuffleboard.getTab("Data Tab");
-    Shuffleboard.selectTab("Data Tab");
-    Shuffleboard.getTab("Data Tab").add(autoChooser);
+    //ShuffleboardTab tab = Shuffleboard.getTab("Data Tab");
+    //Shuffleboard.selectTab("Data Tab");
+    //Shuffleboard.add(autoChooser);
     //Shuffleboard.getTab("Date Tabe").add("Field", Field);
     //Shuffleboard.getTab("Data Tab").add("Homed", feeder.isHomed());
     //Shuffleboard.putData("Auto Chooser", autoChooser);
-    //SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     /* 
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
@@ -173,10 +173,10 @@ public class RobotContainer
     new JoystickButton(flightStick, 2).onTrue(Commands.runOnce(drivebase::zeroGyro));
     new JoystickButton(flightStick, 3).onTrue(new AmpPositionCommand(feeder));
     new JoystickButton(flightStick, 4).onTrue(new IntakePositionCommand(feeder));
-    new JoystickButton(flightStick, 5).onTrue(new DepositAmpCommand(feeder, lights));
+    new JoystickButton(flightStick, 5).onTrue(new DepositAmpCommand(feeder, lights).withTimeout(2));
     new JoystickButton(flightStick, 6).onTrue(new IntakeCommand(feeder, lights));
     new JoystickButton(flightStick, 8).onTrue(new HomeFeederCommand(feeder, lights));
-    new JoystickButton(flightStick, 10).onTrue(new ShootSpeakerCommand(feeder, lights));
+    new JoystickButton(flightStick, 10).onTrue(new ShootSpeakerCommand(feeder, lights).withTimeout(2));
     new JoystickButton(flightStick, 11).onTrue(new StopIntakeCommand(feeder, lights));
     new JoystickButton(flightStick, 12).onTrue(new ShootPositionCommand(feeder));
 
